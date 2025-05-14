@@ -1,7 +1,7 @@
 package com.example.eswnIssuer.Controller;
 
 import com.example.eswnIssuer.DTO.IdentityVerifyDTO;
-import com.example.eswnIssuer.Service.IdentityVerificationService;
+import com.example.eswnIssuer.Service.VCIssueService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,23 +11,27 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-public class IdentityVerificationController {
-    private final IdentityVerificationService identityVerificationService;
+public class VCissueController {
 
-    IdentityVerificationController(IdentityVerificationService identityVerificationService) {
-        this.identityVerificationService = identityVerificationService;
+    private final VCIssueService vcIssueService;
+
+    public VCissueController(VCIssueService vcIssueService) {
+        this.vcIssueService = vcIssueService;
     }
 
-    @PostMapping("/identityverify")
-    public ResponseEntity identityverify(@RequestBody IdentityVerifyDTO identityVerifyDTO) {
-
-        System.out.println("요청컴온됨");
+    @PostMapping("/issueVC")
+    public ResponseEntity VCIssue(@RequestBody IdentityVerifyDTO identityVerifyDTO) {
+        System.out.println("VC 발급 요청됨");
         System.out.println(identityVerifyDTO.getAge());
         System.out.println(identityVerifyDTO.getStudentId());
         System.out.println(identityVerifyDTO.getStudentName());
         System.out.println(identityVerifyDTO.getUniversity());
-        boolean result = identityVerificationService.identityVerify(identityVerifyDTO);
-
-        return new ResponseEntity(result, HttpStatus.OK);
+        try {
+            String vcJson = vcIssueService.issueVC(identityVerifyDTO);
+            return ResponseEntity.ok(vcJson);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("VC 발급 실패: " + e.getMessage());
+        }
     }
 }
