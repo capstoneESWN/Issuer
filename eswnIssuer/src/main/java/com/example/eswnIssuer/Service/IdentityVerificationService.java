@@ -15,7 +15,7 @@ public class IdentityVerificationService {
     }
     public boolean identityVerify(IdentityVerifyDTO dto) {
         // 입력값과 일치하는 레코드를 찾음
-        Optional<Identity> optionalIdentity = identityRepository.findByStudentIdAndAgeAndStudentNameAndUniversity(
+        Optional<Identity> optionalIdentity = identityVerifyRepository.findByStudentIdAndAgeAndStudentNameAndUniversity(
                 dto.getStudentId(),
                 dto.getAge(),
                 dto.getStudentName(),
@@ -31,8 +31,9 @@ public class IdentityVerificationService {
             }
 
             // 아직 사용되지 않은 사용자 → 인증 성공 + is_used = true로 업데이트
-            identity.setUsed(true); // 또는 setIsUsed(true); 필드명에 따라 다름
-            identityRepository.save(identity);
+            // identity.setUsed(true); // 또는 setIsUsed(true); 필드명에 따라 다름
+            // identityVerifyRepository.save(identity);
+
             return true;
         }
 

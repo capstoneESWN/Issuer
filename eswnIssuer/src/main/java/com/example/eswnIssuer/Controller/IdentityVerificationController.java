@@ -19,7 +19,7 @@ public class IdentityVerificationController {
     @PostMapping("/identityverify")
     public ResponseEntity identityverify(@RequestBody IdentityVerifyDTO identityVerifyDTO) {
 
-        boolean result = identityVerificationService.identityverify(identityVerifyDTO);
+        boolean result = identityVerificationService.identityVerify(identityVerifyDTO);
 
         return new ResponseEntity(result, HttpStatus.OK);
     }

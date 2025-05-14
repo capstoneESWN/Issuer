@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class EpconnectApplication {
+public class eswnIssuerApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(EpconnectApplication.class, args);
+		SpringApplication.run(eswnIssuerApplication.class, args);
 	}
 
 }
